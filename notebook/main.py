@@ -41,3 +41,7 @@ with GedcomReader(gedcom_file) as parser:
         })
 
 df = pd.DataFrame(people)
+
+
+df["Birth Date"] = df["Birth Date"].apply(parse_date)
+df["Death Date"] = df["Death Date"].apply(parse_date)
