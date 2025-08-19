@@ -45,3 +45,33 @@ df = pd.DataFrame(people)
 
 df["Birth Date"] = df["Birth Date"].apply(parse_date)
 df["Death Date"] = df["Death Date"].apply(parse_date)
+
+
+df["Birth Year"] = df["Birth Date"].apply(lambda d: d.year if d else None)
+df["Age at death"] = df.apply(lambda row: (row["Death Date"].year - row["Birth Date"].year) if row["Death Date"] and row["Birth Date"] else None, axis=1)
+
+
+
+sns.countplot(x="Gender", data=df)
+plt.title("Gender distribution")
+plt.savefig("plots/gender.png")
+plt.close()
+
+
+sns.histplot(df["Birth Year"].dropna(), bins=30, kde=False)
+plt.title("Distribution by birth year")
+plt.xlabel("Birth year")
+plt.ylabel("Number of individuals")
+plt.savefig("plots/birthyear.png")
+plt.close()
+
+
+
+df["Century"] = (df["Birth Year"] // 100 + 1).astype("Int64")
+life_by_century = df.groupby("Century")["Age at Death"].mean()
+
+life_by_century.plot(kind="bar")
+plt.title("Avg age at death by birth century")
+plt.ylabel("Avg age")
+plt.savefig("plots/avg_age.png")
+plt.close()
