@@ -8,3 +8,4 @@ The goal is for the user to understand where they come from.
 ## Next steps :
 - Actually start something
 - Create a visualization based on the evolution of ancestor's locations
+- add a cloud word based on name frequency?
